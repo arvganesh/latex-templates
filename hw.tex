@@ -1,0 +1,159 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry} % Margin
+\usepackage{amssymb} % Symbols
+\usepackage{amsmath} % Environments
+\usepackage{todonotes} % Todo functionality
+\usepackage{fancyhdr} % Header
+\usepackage{parskip} % Skip indentation
+
+\title{Example homework template}
+\author{\textsc{Name here}}
+
+\lhead{Example homework template}
+\rhead{\textsc{Name here}}
+
+\pagestyle{fancy}
+
+% Macros
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\mat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\ol}{\overline}
+
+% Math operators
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Tr}{Tr}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+      \item  Let $v$ be an eigenvector of $A$ with associated eigenvalue $\lambda$.  Then using the definition of eigenvector and the fact that $A$ is skew Hermitian, we obtain
+    \begin{align*}
+      v^H A^H v &= \ol{\lambda} || v||^2 \\
+      & = v^H A^H v  \\
+      &= - v^H A v \\
+      &= - \lambda || v||^2,
+    \end{align*}
+    so that $\ol{\lambda} = - \lambda$.  But in fact this means that $\lambda$ is purely imaginary, as claimed.
+  \item We verify each axiom.
+    \begin{itemize}
+      \item {\it Positive definiteness.} We note that
+        \begin{align*}
+          \langle A, A\rangle = \sum_{i=1}^{m} \sum_{j=1}^{n} A_{ij}^2 \geq 0.
+        \end{align*}
+        We have equality iff $A_{ij} = 0$ for all $i, j$, which implies that $A = 0$ (the zero matrix).
+      \item {\it Symmetry.} Clearly, we have
+        \begin{align*}
+          \langle A, B\rangle = \sum_{i=1}^{m} \sum_{j=1}^{n} A_{ij} B_{ij} = \sum_{i=1}^{m}\sum_{j=1}^{n} B_{ij} A_{ij} = \langle B, A\rangle.
+        \end{align*}
+
+      \item {\it Linearity.} Let $\alpha, \beta \in \RR$, and $A, B, C \in \RR^{n \times n}$.  Then, we have that
+        \begin{align*}
+          \langle A, \alpha B + \beta C\rangle &= \sum_{i=1}^{m} \sum_{j=1}^{n} A_{ij} \left( \alpha B_{ij} + \beta C_{ij} \right) \\
+          &= \alpha \sum_{i=1}^{m} \sum_{j=1}^{n} A_{ij} B_{ij} + \beta \sum_{i=1}^{m} \sum_{j=1}^{n} A_{ij} C_{ij} \\
+          &= \alpha \langle A, B\rangle + \beta \langle A, C\rangle.
+        \end{align*}
+    \end{itemize}
+
+    This verifies all axioms, and thus the given function is an inner product.
+  \item 
+    \begin{enumerate}
+      \item We claim that for $n$ dimensional vectors $v \in \RR^n$ we have
+        \begin{align*}
+          ||v||_{\infty} \leq ||v||_2 \leq  \sqrt{n} ||v||_{\infty}.
+        \end{align*}
+        The left inequality is easy.  We note that if $m = \argmax_{j} |v_j|$,
+        \begin{align*}
+          ||v||_{\infty} &= \max_{j} |v_j| \\
+          &= \sqrt{|v_m|^2} \\
+          &\leq \sqrt{\sum_{j=1}^{n} v_j^2} \\
+          &= ||v||_2.
+        \end{align*}
+        Equality occurs when $v = (1, 1, \dots, 1)$.
+
+        To show the right inequality, we want to show $\sqrt{\sum_{i} v_i^2} \leq \sqrt{n} \max_j |v_j|$.  But this is equivalent to
+        \begin{align*}
+          \frac{\sum_i v_i^2}{ n} \leq \max_j |v_j|^2,
+        \end{align*}
+        which follows from the fact that the LHS is the average of the $v_i^2$, and the RHS is the max of the the $v_i^2$ as $i$ ranges over $\left\{ 1, \dots, n \right\}$; the average of a list of numbers is at most the maximum value.  Equality is achieved when $v = (1, 1, \dots, 1)$.
+
+      \item We claim that for $n$ dimensional vectors $v \in \RR^n$ we have
+        \begin{align*}
+          ||v||_2 \leq ||v||_1 \leq \sqrt{n} ||v||_2.
+        \end{align*}
+        To show the first inequality, we note that
+        \begin{align*}
+          ||v||_2^2 = \sum_{i=1}^{n} |v_i|^2 \leq \left( \sum_{i=1}^{n} |v_i|^2 + 2 \sum_{i \neq j} |v_i| |v_j|  \right) = ||v||_1^2.
+        \end{align*}
+        Thus $||v||_2 \leq ||v||_1$.  The constant 1 is sharp since equality occurs when $v = (1, 1, \dots, 1)$ (i.e.\ the vector of all 1s).
+
+        To prove the second inequality, we apply the Cauchy-Schwarz inequality.  Let $w = (1, 1, \dots, 1)$.  Then for any $v \in \RR^n$, Cauchy-Schwarz states that
+        \begin{align*}
+          |v^H w |^2 =  \left ( \sum_{i=1}^{n} v_i \right )^2 \leq ||v||_2^2 ||w||_2^2 =  n \left ( \sum_{i=1}^{n} v_i^2 \right ).
+        \end{align*}
+        Using the fact that $v^H = v^T$ for real vectors, and taking square roots of both sides, we obtain
+        \begin{align*}
+          \sum_{i=1}^{n} v_i = ||v||_1 \leq \sqrt{n} ||v||_2,
+        \end{align*}
+        which proves the desired result.  Equality is achieved when $v = (1, 1, \dots, 1)$ (or a scalar multiple), so the constant is sharp.
+    \end{enumerate}
+
+  \item To verify this, it suffices to prove the four properties of the pseudoinverse.  Recall the theorem stated above:
+
+{\bf Theorem.} $P \in \RR^{n \times n}$ is the matrix for an orthogonal projection onto $\Ima (P)$ iff $P^2 = P = P^T$.
+
+Suppose $P^{+} = P$.  Then, we have that:
+\begin{itemize}
+  \item $P^{+} P P^{+} = (P^2) P = P^2 = P = P^{+}$.
+  \item $P P^{+} P = (P^2) P = P^2 = P$.
+  \item $(P P^{+})^T = (P^2)^T = P^T = P = P^2 = P P^{+}$.
+  \item $(P^{+} P)^T = (P^2)^T = P^T = P = P^2 = P^{+} P$.
+\end{itemize}
+
+This proves the four Moore-Penrose properties, which implies that in fact $P^{+} = P$.
+
+  \item 
+
+    {\it Proposition.} The matrix $A^TA$ is invertible.
+
+    \begin{proof}
+    First, we have to argue that $A^T A$ is nonsingular.  Suppose, for sake of contradiction that $c$ is a nonzero vector in $\Ker A^T A$.  Then $A^T A c = 0$ so that
+    \begin{align*}
+      0 = c^T A^T A c = (A c)^T (Ac) = |Ac|^2.
+    \end{align*}
+    Since the only vector with length 0 is 0, this forces $Ac = 0$.  But $Ac = c_1 v_1 + c_2 v_2 + \dots + c_m v_m$, where $v_1, \dots, v_m$ are the columns of $A$ and a basis for the subspace $\Ima A$.  But since the $v_i$ are linearly independent, we cannot have $c_1 v_1 + \dots + c_n v_n = 0$ unless $c$ is the zero vector.  This produces a contrdiction; since $A^T A$ has trivial kernel, $A^T A$ is invertible as claim.
+    \end{proof}
+
+    Now, let $w \in \RR^m$.  Recalling that we can partition $\RR^m = \Ima A \oplus \Ima A^{\perp}$, we can consider cases on the source of $w$.
+
+    {\it Case 1.} $w \in \Ima A$.  In this setting, $w = A c$ for some $c$.  Then
+    \begin{align*}
+      Pw = A (A^T A)^{-1} A^T (Ac) = A (A^T A)^{-1} (A^T A) c = Ac = w,
+    \end{align*}
+    which is correct.
+
+    {\it Case 2.} $w \in \Ima A^{\perp}$.  Recall that $(\Ima A)^{\perp} = \Ker (A^T)$, which implies that $A^T w = 0$.  Then we have
+    \begin{align*}
+      Pw = A (A^T A)^{-1} A^T w = A (A^T A)^{-1} 0  = 0,
+    \end{align*}
+    which is the correct result.
+
+    In general, we can write $w = w_1 + w_2$ where $w_1 \in \Ima A, w_2 \in (\Ima A)^{\perp}$.  Then
+    \begin{align*}
+      Pw = Pw_1 + Pw_2 = w_1 + 0 = w_1,
+    \end{align*}
+    applying the previous parts.  Thus, $P$ satisfies the correct definition of orthogonal projection.
+
+\end{enumerate}
+
+
+\end{document}

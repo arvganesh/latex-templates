@@ -1,0 +1,293 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{parskip}
+
+\newcommand{\mat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\ol}{\overline}
+\newcommand{\mbf}{\mathbf}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\sgn}{sgn}
+
+
+\title{Example notes}
+\author{\textsc{Name here}}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Lecture 1: 6-27-19}
+
+Last time, we defined a field, and a vector space.  Today, we will define what a vector subspace is.  Intuitively, it is a ``smaller'' vector space inside a bigger vector space.
+
+We will also discuss properties of a vector space.
+
+Recall that if you have a vector space $V$ and a field $\mathbb{F}$, you can define two operations, vector addition and scalar multiplication as follows:
+
+\begin{itemize}
+  \item $+ : V \times V \to V$
+  \item $\times: \mathbb{F} \times V \to V$.
+\end{itemize}
+
+{\bf Definition.} A vector space $W \subset V$ is a subspace of $V$ if and only if for all $w_1, w_2 \in W$ and $\alpha, \beta \in \mathbb{F}$, we have
+\begin{align*}
+  \alpha w_1 + \beta w_2 \in W.
+\end{align*}
+
+{\bf Example.} Note that $\mathbb{R}^2$ is a subspace of $\mathbb{R}^3$.
+
+{\bf Example.} Note that $\mathbb{R}^{n \times n}$ is a vector space over the field $\mathbb{R}$.
+
+Let $W$ be the space of all $n \times n$ symmetric matrices.  Note that $W$ is a subspace of $\mathbb{R}^{n \times n}$.
+
+Let $A, B$ be symmetric.  Clearly, $\alpha A + \beta B$ is symmetric by linearity.
+
+{\bf Example.} Let $V = \mathbb{R}^{n \times n}, F = \mathbb{R}, W = \left\{ A | A_{ij} = - A_{ji} \right\}$, the set of skew-symmetric matrices.
+
+Let $A, B$ be two matrices in $W$, and consider $\alpha, \beta \in \mathbb{R}$.
+
+We would like to show that
+\begin{align*}
+  (\alpha A + \beta B)_{ij} = - (\alpha A + \beta B)_{ji}.
+\end{align*}
+
+And this follows from the same logic as before.
+
+{\bf Example.} Let's consider the vector space $V = \mathbb{R}^2$.  Let $W = \left\{ \mat{1 \\ 0} + c \mat{1 \\ 1} \right\}$.
+
+So show that this isn't a subspace, let
+\begin{align*}
+  w_1 &= \mat{1 \\ 0} + c_1 \mat{1 \\ 1} \\
+  w_2 &= \mat{1 \\ 0} + c_2 \mat{1 \\ 1}.
+\end{align*}
+
+And furthermore,
+\begin{align*}
+  \alpha w_1 + \beta w_2 = (\alpha + \beta) \mat{1 \\ 0} + (\alpha c_1 + \beta c_2) \mat{1 \\ 1},
+\end{align*}
+
+and we see that $a w_1 + b w_2 \not \in W$.  Furthermore, there isn't a zero vector in this subspace (if we look at it geometrically).
+
+{\bf Definition.} Let $v_1, \cdots, v_k$ be vectors.  We say that the vectors are linearly dependent if there exists $\alpha_1, \dots, a_k$ not all 0 such that
+
+\begin{align*}
+  \alpha_1 v_1 + \alpha_2 v_2 + \cdots + \alpha_k v_k = 0.
+\end{align*}
+
+We say that vectors are linearly independent if they are not linearly independent.
+
+{\bf Example.} What does it mean for a matrix to be linearly independent?
+
+Let $V$ be a matrix.  We want to solve:
+\begin{align*}
+  V = \mat{v_1 & v_2 & \dots & v_k} \mat{\alpha_1 \\ \alpha_2 \\ \cdots \\ \alpha_k} = 0
+\end{align*}
+
+If the columns of $V$ are linearly independent, then we can conclude that $a$ is the zero vector.
+
+If the columns are linearly dependent, you can find a nontrivial solution $a$ to this problem.
+
+{\bf Definition.} We define the rank of a matrix $V$ to be the maximum number of linearly independent columns.
+
+{\bf Definition.} We define the {\it span} of a set of vectors $v_1, \dots, v_k$ to be the set
+
+\begin{align*}
+  \left\{ V | V = \alpha_1 v_1 + \dots + \alpha_k v_k, \alpha_1, \dots, a_k \in \mathbb{F} \right\}
+\end{align*}
+
+{\bf Example.} Let $V = \mathbb{R}^2$.  What is the span of the vector $\mat{1 \\ 0}$?  You get $V = \mat{\alpha_1 \\ 0}$.  Geometrically, this is just the $x$-axis.
+
+{\bf Example.} What is the span of the vector $\mat{1 \\ 1}$?  You get $V = \mat{\alpha_1 \\ \alpha_1}$, which is the linear $y = x$.
+
+{\bf Example.} What is the span of $\mat{1 \\ 0}, \mat{0 \\ 1}$?  This is the whole plane.
+
+{\bf Example.} What is the span of $\mat{1 \\ 0}, \mat{5 \\ 0}$?  Just the $x$-axis.
+
+{\bf Definition.} Given a vector space $V$ and a set of vectors $ \left\{ v_1, \dots, v_n \right\}$, we say that the set is a basis if two conditions hold:
+
+\begin{itemize}
+  \item $v_1, \dots, v_n$ are linearly independent.
+  \item $\Span \left\{ v_1, \dots, v_n \right\} = V$.
+\end{itemize}
+
+{\bf Example.} The vectors $\mat{1 \\ 1}$, $\mat{1 \\ 0}$ are a basis of the plane $\mathbb{R}^2$.
+
+{\bf Definition.} The {\it dimension} of a vector space $V$ is the number of vectors in a basis.
+
+If $v_1, \dots, v_n$ form a basis, then for any vector $v \in V$, we can choose constants $c_1, \dots, c_n$ such that $V = c_1 v_1 + c_2 v_2 + \cdots + c_n v_n$; note that these must be unique.  Otherwise, we can get a contradiction by obtaining different constants $b_1, \cdots, b_n$ such that $V = b_1 v_1 + \dots + b_n v_n$.
+
+\section{Lecture 2: 7-1-19}
+
+Recall the definition of linear dependence.  If $v_1, \cdots, v_k$ are linearly dependent, there exists $c_1, \cdots, c_k$ not all 0 such that
+
+\begin{align*}
+  c_1 v_1 + \dots + c_k v_k = 0.
+\end{align*}
+
+The vectors are linearly independent if the opposite is true.
+
+Recall that the span of $v_1, \dots, v_k$ is defined as follows:
+\begin{align*}
+  \Span \left\{ v_1, \dots, v_k \right\} = \left\{ c_1 v_1 + \dots + c_k v_k | c_i \in \RR \right\}.
+\end{align*}
+
+Recall that $v_1, \dots, v_n$ is a basis for $V$ if the $v_i$ are linearly independent, and the $v_i$ span $V$.
+
+{\bf Theorem.} If $v_1, \dots, v_m$ form a basis, then any $v \in V$ can be expressed uniquely as
+\begin{align*}
+  v = c_1 v_1 + \dots + c_n v_n, c_i \in \mathbb{F}.
+\end{align*}
+
+{\bf Definition.} $c_1, c_2, \cdots, c_n$ are the coefficients of $v$ with respect to the basis $v_1, \dots, v_n$.
+
+{\bf Example.} Let $V = \mathbb{R}^3$, $\mathbb{F} = \mathbb{R}$.  We can define the standard basis as follows:
+\begin{align*}
+  \mbf{e}_1 = \mat{1 \\ 0 \\ 0}; \qquad \mbf{e}_2 = \mat{0 \\ 1 \\ 0}; \qquad \mbf{e}_3 = \mat{0 \\ 0 \\ 1}.
+\end{align*}
+
+Then
+\begin{align*}
+  v = 1 \mbf{e}_1 + 2 \mbf{e}_2 + 3\mbf{e}_3 = \mat{1 \\ 2 \\ 3}.
+\end{align*}
+
+Now, consider a new basis
+\begin{align*}
+  \mbf{v}_1 = \mat{1 \\ 1 \\ 0}; \qquad \mbf{v}_2 = \mat{0 \\ 1 \\ 0}; \qquad \mbf{v}_3 = \mat{0 \\ 0 \\ 1}.
+\end{align*}
+
+The same vector $v$ can be expressed as
+\begin{align*}
+  v = \mbf{v}_1 + \mbf{v}_2 + 3 \mbf{v}_3.
+\end{align*}
+
+Now we will talk a little bit about orthogonality, and sums and intersections of vector spaces.
+
+Given two vectors $x, y \in \mathbb{R}^n$, we can define the inner product between $x$ and $y$ as follows:
+\begin{align*}
+  \la x, y \ra = \sum_{i=1}^{n} x_i y_i = y^T x.
+\end{align*}
+
+If $x, y \in \mathbb{C}^n$, we define
+\begin{align*}
+  \la x, y \ra = \sum_{i=1}^{n} x_i \ol{y}_i = y^H x.
+\end{align*}
+
+{\bf Definition.} We say that $x, y$ are orthogonal if $\la x, y \ra = 0$.
+
+{\bf Definition.} We say that $v_1, \dots, v_n$ are mutually orthogonal if $\la v_i, v_j \ra = 0$ for any $i \neq j$.
+
+{\bf Definition.} We say that $v_1, \dots, v_n$ are orthonormal if the vectors are mutually orthogonal and $\la v_i, v_i \ra = 1$.
+
+{\bf Example.} The standard basis in $\mathbb{R}^n$ is an orthonormal set of vectors.
+
+{\bf Example.} (Nonexample).  The basis from before,
+\begin{align*}
+  \mbf{v}_1 = \mat{1 \\ 1 \\ 0}; \quad \mbf{v}_2 = \mat{0 \\ 1 \\ 0}; \quad \mbf{v}_3 = \mat{0 \\ 0 \\ 1},
+\end{align*}
+is not an orthonormal basis, since
+\begin{align*}
+  \la v_1, v_1 \ra &= 2 \neq 1; \\
+  \la v_1, v_2 \ra &= 1 \neq 0.
+\end{align*}
+
+{\bf Definition.} We say that a matrix $A$ is orthogonal if $A^T A = I$.  This is the same as requiring that the columns of $A$ are orthonormal vectors.
+
+{\bf Lemma.} Suppose that $v_1, \dots, v_n$ are mutually orthogonal in $\mathbb{R}^n$.  Then $v_1, \dots, v_n$ are linearly independent.
+
+{\bf Proof.} We want to show that if
+\begin{align*}
+  c_1 v_1 + \dots + c_n v_n = 0,
+\end{align*}
+we must have $c_i = 0$ for all $i$.
+
+Now, consider
+\begin{align*}
+  \la c_1 v_1 + \dots + c_n v_n, v_i \ra = \la 0, v_i \ra = 0.
+\end{align*}
+Now, applying the linearity of the inner product, this is equal to:
+\begin{align*}
+  c_1 \la v_1, v_i \ra + c_2 \la v_2, v_i \ra + \cdots + c_n \la v_n, v_i \ra = 0,
+\end{align*}
+which is equal to $c_i \la v_i, v_i \ra = 0$.  This implies that $c_i = 0$; and this is true for all $i$.
+
+We will now talk about sums and intersections of subspaces.
+
+Recall that if $W \subset V$, where $V$ is a vector space over $\mathbb{F}$, we have $W$ is a subspace of $V$ iff for all $w_1, w_2 \in W$, $\alpha, \beta \in \mathbb{F}$, we have
+\begin{align*}
+  \alpha w_1 + \beta w_2 \in W.
+\end{align*}
+
+Suppose that $S, R \subset V$ are subspaces.  We can define:
+
+\begin{enumerate}
+  \item $S + R = \left\{ s + r |  s \in S, r \in R \right\}$.
+  \item $S \cap R = \left\{ v | v \in S, v \in R \right\}$.
+\end{enumerate}
+
+{\bf Lemma.} $S+R$ and $S \cap R$ are subspaces.
+
+{\bf Proof.} Take $w_1, w_2 \in S+R$.  By definition, there exists $r_1, r_2, s_1, s_2$ such that $w_1 = r_1 + s_1$, and $w_2 = r_2 + s_2$.
+
+Now,
+\begin{align*}
+  w_1 + w_2 = (s_1 + s_2) + (r_1 + r_2).
+\end{align*}
+But $(s_1 + s_2) \in S$, and $(r_1 + r_2) \in R$, so $w_1 + w_2 \in S+R$ as claimed.
+
+Similarly,
+\begin{align*}
+  \alpha w_1 = \alpha (s_1 + r_1) = \alpha s_1 + \alpha r_1 \in S + R.
+\end{align*}
+
+{\it Exercise.} Show that $S \cap R$ is a subspace.
+
+{\it Remark.} Note that $S \cup R$ is not a subspace, the reason is that this isn't closed under addition.  For example, the $x$-axis is a subspace of $\mathbb{R}^2$, and the $y$-axis is a subspace of $\RR^2$.  But the union doesn't contain vectors in the interior of the plane.
+
+{\bf Definition.} We say that $T = S \oplus R$, i.e. $T$ is the direct sum of $S$ and $R$.
+
+\begin{enumerate}
+  \item We have $T = S+R$.
+  \item $S \cap R = \left\{ 0 \right\}$.
+\end{enumerate}
+
+{\bf Example.} In $\mathbb{R}^3$, we can take
+\begin{align*}
+  S = \Span \mat{1 \\ 0 \\ 0}.
+\end{align*}
+\begin{align*}
+  R = \Span \left\{ \mat{0 \\ 1 \\ 0}, \mat{0 \\ 0 \\ 1} \right\}.
+\end{align*}
+
+In this case, $\mathbb{R}^3 = S \oplus R$.
+
+{\bf Example.} Let $S_2 = \Span \mat{ 1 \\ 0 \\ 0}, R_2 = \Span \mat{ 0 \\ 1 \\ 0}$.  Here, $S_2 \cap R_2 = \left\{ 0 \right\}$, but $S_2 + R_2 \neq \mathbb{R}^3$.
+
+{\bf Example.} Let $S_3 = \Span \left( \mat{1 \\ 0 \\ 0}, \mat{0 \\ 1 \\ 0} \right)$, $R_3 = \Span \left( \mat{0 \\ 1 \\ 0}, \mat{0 \\ 0 \\ 1} \right)$.  Herein, $S_3 + R_3 = \mathbb{R}^3$, but $S_3 \cap R_3 \neq \left\{ 0 \right\}$.
+
+{\bf Theorem.} If $T = S \oplus R$, then every $t \in T$ can be expressed uniquely as $t = s+r$ for $s \in S, r \in R$.
+
+{\bf Proof.} Suppose for sake of contradiction, that $t = s_1 + r_1 = s_2 + r_2$.  Then $s_1 - s_2 = r_2 - r_1$, but this is a contradiction since we assumed the intersection was just the zero vector.
+
+{\bf Theorem.} If $T = S \oplus R$, then $\dim T = \dim S + \dim R$.
+
+{\bf Proof.} The idea is that you can obtain a basis of $T$ by choosing a basis of $S$, a basis of $R$, and combining them.
+
+{\bf Theorem.} We have $\dim S + \dim R = \dim S + \dim R - \dim S \cap R$. (Note that the direct sum theorem is a special case of this theorem.)
+
+Note: no lecture on Thursday July 4.
+
+\end{document}
